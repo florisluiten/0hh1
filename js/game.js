@@ -388,6 +388,10 @@ var Game = new (function() {
   }
 
   function doAction(action, value) {
+    if (action.substr(0, 8) == 'navigate') {
+      action = navigateToAction(action.substr(8));
+    }
+
     switch (action) {
       case 'close-titleScreen':
         if (!tutorialPlayed())
@@ -458,19 +462,6 @@ var Game = new (function() {
         break;
       case 'about':
         showAbout();
-        break;
-      case 'navigateLeft':
-      case 'navigateUp':
-      case 'navigateRight':
-      case 'navigateDown':
-        if (onTitleScreen) {
-          if (!tutorialPlayed())
-            startTutorial();
-          else
-            showMenu();
-          break;
-        }
-
         break;
     }
   }
@@ -595,6 +586,12 @@ var Game = new (function() {
     $('#tweeturl').attr('href', url);
   }
 
+  function navigateToAction(direction) {
+    if (onTitleScreen) {
+      return 'close-titleScreen';
+    }
+  }
+ 
   //this.setScore = setScore;
 
   this.start = start;
