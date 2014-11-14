@@ -668,7 +668,7 @@ var Game = new (function() {
     }
 
     if (uiScreen == 'game') {
-      var $targets = $('#grid .tile'),
+      var $targets = $('#grid td'),
           $active = $targets.filter('.active');
 
       if ($active.length == 0) {
@@ -687,13 +687,13 @@ var Game = new (function() {
         var $target;
 
         if (direction == 'right') {
-          $target = $active.closest('td').next().find('.tile');
+          $target = $active.next();
         } else if (direction == 'left') {
-          $target = $active.closest('td').prev().find('.tile');
+          $target = $active.prev();
         } else if (direction == 'up') {
-          $target = $active.closest('tr').prev().find('.tile').eq($active.closest('td').index());
+          $target = $active.closest('tr').prev().find('td').eq($active.closest('td').index());
         } else if (direction == 'down') {
-          $target = $active.closest('tr').next().find('.tile').eq($active.closest('td').index());
+          $target = $active.closest('tr').next().find('td').eq($active.closest('td').index());
         }
 
         if ($target && $target.length > 0) {
