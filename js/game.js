@@ -22,6 +22,7 @@ var Game = new (function() {
       endGameTOH2,
       endGameTOH3,
       onHomeScreen = true,
+      onTitleScreen = true,
       undoStack = [],
       undone = false,
       gameEnded = false;
@@ -133,6 +134,7 @@ var Game = new (function() {
 
   function showTitleScreen() {
     onHomeScreen = true;
+    onTitleScreen = true;
     $('.screen').hide().removeClass('show');
     $('#title').show();
     setTimeout(function() { $('#title').addClass('show'); },0);
@@ -148,6 +150,7 @@ var Game = new (function() {
 
   function showMenu() {
     onHomeScreen = true;
+    onTitleScreen = false;
     clearTimeouts();
     $('.screen').hide().removeClass('show');
     $('#menu').show();
@@ -315,6 +318,10 @@ var Game = new (function() {
         doAction('undo');
         return false;
       }
+      if (evt.keyCode == 37 /* left */) { doAction('navigateLeft'); return false; }
+      if (evt.keyCode == 38 /* up */) { doAction('navigateUp'); return false; }
+      if (evt.keyCode == 39 /* right */) { doAction('navigateRight'); return false; }
+      if (evt.keyCode == 40 /* down */) { doAction('navigateDown'); return false; }
     });
     $(document).on('touchend mouseup', click);
     $(document).on('touchstart mousedown', '#grid td', function(e) {
@@ -451,6 +458,19 @@ var Game = new (function() {
         break;
       case 'about':
         showAbout();
+        break;
+      case 'navigateLeft':
+      case 'navigateUp':
+      case 'navigateRight':
+      case 'navigateDown':
+        if (onTitleScreen) {
+          if (!tutorialPlayed())
+            startTutorial();
+          else
+            showMenu();
+          break;
+        }
+
         break;
     }
   }
