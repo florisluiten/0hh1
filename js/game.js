@@ -587,8 +587,31 @@ var Game = new (function() {
   }
 
   function navigateToAction(direction) {
+    direction = direction.toLowerCase();
+
     if (uiScreen == 'titleScreen') {
       return 'close-titleScreen';
+    }
+
+    if (uiScreen == 'menu') {
+      var $targets = $('#menu p'),
+        $active = $targets.filter('.active');
+
+      if ($active.length == 0) {
+        if (direction == 'up') {
+          $targets.last().addClass('active');
+        } else {
+          $targets.first().addClass('active');
+        }
+      } else {
+        if (direction == 'down' && $active.next().length > 0) {
+          $active.removeClass('active')
+          .next().addClass('active');
+        } else if (direction == 'up' && $active.prev().length > 0) {
+          $active.removeClass('active')
+          .prev().addClass('active');
+        }
+      }
     }
   }
  
