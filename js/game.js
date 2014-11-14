@@ -22,7 +22,7 @@ var Game = new (function() {
       endGameTOH2,
       endGameTOH3,
       onHomeScreen = true,
-      onTitleScreen = true,
+      uiScreen = null,
       undoStack = [],
       undone = false,
       gameEnded = false;
@@ -134,7 +134,7 @@ var Game = new (function() {
 
   function showTitleScreen() {
     onHomeScreen = true;
-    onTitleScreen = true;
+    uiScreen = 'titleScreen';
     $('.screen').hide().removeClass('show');
     $('#title').show();
     setTimeout(function() { $('#title').addClass('show'); },0);
@@ -150,7 +150,7 @@ var Game = new (function() {
 
   function showMenu() {
     onHomeScreen = true;
-    onTitleScreen = false;
+    uiScreen = 'menu';
     clearTimeouts();
     $('.screen').hide().removeClass('show');
     $('#menu').show();
@@ -587,7 +587,7 @@ var Game = new (function() {
   }
 
   function navigateToAction(direction) {
-    if (onTitleScreen) {
+    if (uiScreen == 'titleScreen') {
       return 'close-titleScreen';
     }
   }
