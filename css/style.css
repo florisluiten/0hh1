@@ -273,7 +273,7 @@ html body .show01 .tile .inner:after {
   animation: flash 2s ease-in-out infinite;
 }
 
-.tile.active .inner,
+div.active,
 p.active {
     border: solid #D1BD12 3px;
 }

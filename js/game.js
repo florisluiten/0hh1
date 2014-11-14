@@ -169,6 +169,7 @@ var Game = new (function() {
 
   function showSizes() {
     onHomeScreen = false;
+    uiScreen = 'sizes';
     showGame();
     $('#boardsize').html('<span>Select a size</span>');
     $('#menugrid').removeClass('hidden');
@@ -614,6 +615,51 @@ var Game = new (function() {
         } else if (direction == 'ok') {
           $active.removeClass('active');
           return $active.attr('data-action');
+        }
+      }
+
+      return;
+    }
+
+    if (uiScreen == 'sizes') {
+      var $targets = $('#menugrid .inner'),
+          $active = $targets.filter('.active');
+
+
+      if ($active.length == 0) {
+        if (direction == 'up' || direction == 'left') {
+          $targets.last().addClass('active');
+        } else {
+          $targets.first().addClass('active');
+        }
+      } else {
+        if (direction == 'ok') {
+          return loadGame(sizes[$active.attr('data-size') * 1 - 1]);
+        }
+
+        var $target;
+
+        if (direction == 'right') {
+          $target = $active.closest('td').next().find('.inner');
+
+          if ($target.length == 0) {
+            $target = $active.closest('tr').next().find('.inner').first();
+          }
+        } else if (direction == 'left') {
+          $target = $active.closest('td').prev().find('.inner');
+
+          if ($target.length == 0) {
+            $target = $active.closest('tr').prev().find('.inner').last();
+          }
+        } else if (direction == 'up') {
+          $target = $active.closest('tr').prev().find('.inner').eq($active.closest('td').index());
+        } else if (direction == 'down') {
+          $target = $active.closest('tr').next().find('.inner').eq($active.closest('td').index());
+        }
+
+        if ($target && $target.length > 0) {
+          $active.removeClass('active');
+          $target.addClass('active');
         }
       }
     }
