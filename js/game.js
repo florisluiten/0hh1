@@ -273,6 +273,7 @@ var Game = new (function() {
         $('#board').addClass('hidden');
         endGameTOH2 = setTimeout(function() {
           gameEnded = true;
+          uiScreen = 'sizes';
           $('#menugrid').removeClass('hidden');
           $('#chooseSize').addClass('show');
           $('#score').show();
