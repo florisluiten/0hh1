@@ -192,6 +192,7 @@ var Game = new (function() {
   
   function loadGame(size) {
     onHomeScreen = false;
+    uiScreen = 'game';
     $('#game').removeClass('show')
     showLoad();
     resize();
@@ -662,6 +663,46 @@ var Game = new (function() {
           $target.addClass('active');
         }
       }
+
+      return;
+    }
+
+    if (uiScreen == 'game') {
+      var $targets = $('#grid .tile'),
+          $active = $targets.filter('.active');
+
+      if ($active.length == 0) {
+        if (direction == 'up' || direction == 'left') {
+          $targets.last().addClass('active');
+        } else {
+          $targets.first().addClass('active');
+        }
+      } else {
+        if (direction == 'ok') {
+          $active.closest('td').mousedown();
+
+          return;
+        }
+
+        var $target;
+
+        if (direction == 'right') {
+          $target = $active.closest('td').next().find('.tile');
+        } else if (direction == 'left') {
+          $target = $active.closest('td').prev().find('.tile');
+        } else if (direction == 'up') {
+          $target = $active.closest('tr').prev().find('.tile').eq($active.closest('td').index());
+        } else if (direction == 'down') {
+          $target = $active.closest('tr').next().find('.tile').eq($active.closest('td').index());
+        }
+
+        if ($target && $target.length > 0) {
+          $active.removeClass('active');
+          $target.addClass('active');
+        }
+      }
+
+      return;
     }
   }
  
