@@ -322,6 +322,7 @@ var Game = new (function() {
       if (evt.keyCode == 38 /* up */) { doAction('navigateUp'); return false; }
       if (evt.keyCode == 39 /* right */) { doAction('navigateRight'); return false; }
       if (evt.keyCode == 40 /* down */) { doAction('navigateDown'); return false; }
+      if (evt.keyCode == 13 /* enter */) { doAction('navigateOk'); return false }
     });
     $(document).on('touchend mouseup', click);
     $(document).on('touchstart mousedown', '#grid td', function(e) {
@@ -610,6 +611,9 @@ var Game = new (function() {
         } else if (direction == 'up' && $active.prev().length > 0) {
           $active.removeClass('active')
           .prev().addClass('active');
+        } else if (direction == 'ok') {
+          $active.removeClass('active');
+          return $active.attr('data-action');
         }
       }
     }
